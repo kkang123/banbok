@@ -1,0 +1,94 @@
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { MemberService } from '../member/member.service';
+
+export interface OAuthUserInfo {
+  provider: string;
+  providerId: string;
+  email: string;
+  name: string;
+  profileImage?: string;
+}
+
+export interface AuthResult {
+  isNewUser: boolean;
+  user: any;
+  accessToken: string;
+}
+
+interface JwtPayload {
+  sub: number;
+  email: string;
+  iat: number;
+}
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly memberService: MemberService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async validateOAuthUser(oauthUserInfo: OAuthUserInfo): Promise<AuthResult> {
+    const existingUser = await this.findExistingUser(oauthUserInfo.email);
+
+    if (existingUser) {
+      return this.createAuthResultForExistingUser(existingUser);
+    }
+
+    return this.createAuthResultForNewUser(oauthUserInfo);
+  }
+
+  async findUserByEmail(email: string) {
+    const users = await this.memberService.findByEmail(email);
+    return users[0] || null;
+  }
+
+  private async findExistingUser(email: string) {
+    const users = await this.memberService.findByEmail(email);
+    return users.length > 0 ? users[0] : null;
+  }
+
+  private async createAuthResultForExistingUser(
+    user: any,
+  ): Promise<AuthResult> {
+    const accessToken = this.generateAccessToken(user);
+
+    return {
+      isNewUser: false,
+      user,
+      accessToken,
+    };
+  }
+
+  private async createAuthResultForNewUser(
+    oauthUserInfo: OAuthUserInfo,
+  ): Promise<AuthResult> {
+    const newUser = await this.createNewUser(oauthUserInfo);
+    const accessToken = this.generateAccessToken(newUser);
+
+    return {
+      isNewUser: true,
+      user: newUser,
+      accessToken,
+    };
+  }
+
+  private async createNewUser(oauthUserInfo: OAuthUserInfo) {
+    const newUsers = await this.memberService.insert({
+      email: oauthUserInfo.email,
+    });
+
+    return newUsers[0];
+  }
+
+  private generateAccessToken(user: any): string {
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      iat: Math.floor(Date.now() / 1000),
+    };
+
+    return this.jwtService.sign(payload);
+  }
+}
