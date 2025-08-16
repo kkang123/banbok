@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* 가로 모드 */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* 모바일 타이머는 항상 표시 */
+  .mobile-timer {
+    display: block !important;
+  }
+
+  /* 데스크탑 타이머는 항상 숨김 (sm 이상이어도) */
+  .desktop-timer {
+    display: none !important;
+  }
+}
