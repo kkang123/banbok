@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MemberService } from '../member/member.service';
+import * as schema from '../member/schema/member.schema';
 
 export interface OAuthUserInfo {
   provider: string;
@@ -77,12 +78,16 @@ export class AuthService {
   private async createNewUser(oauthUserInfo: OAuthUserInfo) {
     const newUsers = await this.memberService.insert({
       email: oauthUserInfo.email,
+      name: oauthUserInfo?.name,
+      provider: oauthUserInfo.provider,
+      providerId: oauthUserInfo.providerId,
+      profileImage: oauthUserInfo?.profileImage,
     });
 
     return newUsers[0];
   }
 
-  private generateAccessToken(user: any): string {
+  private generateAccessToken(user: typeof schema.member.$inferSelect): string {
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,

@@ -1,12 +1,15 @@
 import { Controller, Get, Request, Res, UseGuards } from '@nestjs/common';
 import { NaverAuthGuard } from './guards/naver-auth.guard';
-// import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller()
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {}
 
   @UseGuards(NaverAuthGuard)
   @Get('member/auth/naver')
@@ -22,7 +25,7 @@ export class AuthController {
     // HttpOnly 쿠키로 토큰 설정
     res.cookie('accessToken', result.accessToken, {
       httpOnly: true, // XSS 방지 (JavaScript로 접근 불가)
-      secure: false, // 개발환경에서는 false (프로덕션에서는 true)
+      secure: this.configService.get<string>('NODE_ENV') === 'production',
       sameSite: 'lax', // CSRF 방지
       maxAge: 24 * 60 * 60 * 1000, // 1일
       path: '/',
