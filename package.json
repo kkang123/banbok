@@ -4,6 +4,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:backend": "npm run dev --workspace=apps/backend",
+    "start:backend": "npm run start --workspace=apps/backend", 
+    "build:backend": "npm run build --workspace=apps/backend",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
