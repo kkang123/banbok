@@ -13,7 +13,7 @@ export interface OAuthUserInfo {
 
 export interface AuthResult {
   isNewUser: boolean;
-  user: any;
+  user: typeof schema.member.$inferSelect;
   accessToken: string;
 }
 
