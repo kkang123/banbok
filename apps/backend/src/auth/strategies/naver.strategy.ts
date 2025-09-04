@@ -44,10 +44,18 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
 
   async validate(
     accessToken: string,
-    refreshToken: string,
-    profile: any,
+    _refreshToken: string,
+    _profile: any,
   ): Promise<any> {
-    return profile;
+    return new Promise((resolve, reject) => {
+      this.userProfile(accessToken, (error: any, userInfo: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(userInfo);
+        }
+      });
+    });
   }
 
   private sanitizeEmail(email: string): string {
