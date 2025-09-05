@@ -17,7 +17,7 @@ export const useAuthStore = create<AuthState>()(
             `${process.env.NEXT_PUBLIC_API_URL}/v1/members/me`,
             {
               credentials: "include",
-            }
+            },
           );
 
           const contentType = res.headers.get("content-type");
@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>()(
 
           if (res.ok && contentType?.includes("application/json")) {
             const data = JSON.parse(text);
-            set({ user: data.result });
+            set({ user: data });
           } else {
             set({ user: null });
           }
@@ -52,6 +52,6 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "auth-storage",
       partialize: (state) => ({ user: state.user }),
-    }
-  )
+    },
+  ),
 );
