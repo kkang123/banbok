@@ -1,3 +1,5 @@
 export interface SubmitProblemRequestDto {
-  readonly link: string;
+  title: string;
+  site: string;
+  link: string;
 }

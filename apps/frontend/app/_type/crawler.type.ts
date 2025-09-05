@@ -1,12 +1,7 @@
 import { CheerioAPI } from "cheerio";
-
-export interface CrawlingResult {
-  title: string;
-  site: string;
-  link: string;
-}
+import { SubmitProblemRequestDto } from "@banbok/shared";
 
 export interface SiteCrawler {
   canHandle: (url: string) => boolean;
-  crawl: ($: CheerioAPI, url: string) => Promise<CrawlingResult>;
+  crawl: ($: CheerioAPI, url: string) => Promise<SubmitProblemRequestDto>;
 }

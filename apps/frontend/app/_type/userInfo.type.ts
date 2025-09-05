@@ -1,9 +1,4 @@
-export interface UserInfo {
-  id?: string;
-  name: string;
-  email: string;
-  profileImage: string;
-}
+import { MyInfoResponseDto as UserInfo } from "@banbok/shared";
 
 export interface AuthState {
   user: UserInfo | null;
