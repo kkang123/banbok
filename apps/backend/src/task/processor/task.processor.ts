@@ -12,6 +12,7 @@ type MemberInfo = {
 
 type ProblemWithMember = {
   id: number;
+  title: number;
   problemUrl: string;
   site: string;
   createdAt: Date;

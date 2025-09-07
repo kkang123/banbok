@@ -32,6 +32,7 @@ export class ProblemRepository {
     return this.database
       .select({
         id: Problem.id,
+        title: Problem.title,
         problemUrl: Problem.problemUrl,
         site: Problem.site,
         createdAt: Problem.createdAt,
