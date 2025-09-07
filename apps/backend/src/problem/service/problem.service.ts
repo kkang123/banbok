@@ -3,6 +3,7 @@ import { MemberService } from '../../member/service';
 import { ProblemRepository } from '../repository';
 import { Site } from '../enums';
 import { TIME_CONSTANTS } from '../../common/constants';
+import { SubmitProblemRequestDto } from '../dto/request/submit-problem.request';
 
 @Injectable()
 export class ProblemService {
@@ -12,11 +13,13 @@ export class ProblemService {
   ) {
   }
 
-  async submit(memberId: number, link: string): Promise<void> {
+  async submit(memberId: number, dto: SubmitProblemRequestDto): Promise<void> {
+    const { link, title } = dto;
     await this.validateSubmission(memberId, link);
 
     await this.problemRepository.insert({
       problemUrl: link,
+      title: title,
       site: this.extractSite(link),
       memberId: memberId,
     });

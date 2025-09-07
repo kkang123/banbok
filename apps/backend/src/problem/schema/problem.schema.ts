@@ -12,6 +12,7 @@ export const siteEnum = pgEnum(
 export const Problem = pgTable('problem', {
   ...baseColumns,
   problemUrl: text('problemUrl').notNull().unique(),
+  title: text('title').notNull(),
   site: siteEnum('site').notNull(),
   memberId: integer('member_id').references(() => Member.id),
 });

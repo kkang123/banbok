@@ -18,6 +18,6 @@ export class ProblemController {
   async submit(
     @User() memberId: number,
     @Body() dto: SubmitProblemRequestDto) {
-    await this.problemService.submit(memberId, dto.link);
+    await this.problemService.submit(memberId, dto);
   }
 }
