@@ -1,16 +1,40 @@
 services:
-  postgres:
-    image: postgres:15
-    container_name: banbok-postgres
+  redis:
+    image: redis:7-alpine
+    container_name: banbok-redis
     ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: banbok
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: example
+      - "6379:6379"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - redis_data:/data
     restart: unless-stopped
+    networks:
+      - banbok-network
+    command: redis-server --appendonly yes
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: banbok-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASS=${MAIL_PASS}
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - banbok-network
 
 volumes:
-  postgres_data:
+  redis_data:
+
+networks:
+  banbok-network:
+    driver: bridge

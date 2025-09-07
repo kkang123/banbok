@@ -1,0 +1,42 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-f', 'apps/backend/Dockerfile',
+      '-t', 'gcr.io/$PROJECT_ID/banbok-backend:$COMMIT_SHA',
+      '-t', 'gcr.io/$PROJECT_ID/banbok-backend:latest',
+      '.'
+    ]
+
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'gcr.io/$PROJECT_ID/banbok-backend:$COMMIT_SHA'
+    ]
+
+  # Push the latest tag
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'gcr.io/$PROJECT_ID/banbok-backend:latest'
+    ]
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', 'banbok-backend',
+      '--image', 'gcr.io/$PROJECT_ID/banbok-backend:$COMMIT_SHA',
+      '--region', 'asia-northeast1',
+      '--platform', 'managed',
+      '--allow-unauthenticated',
+      '--port', '3001',
+      '--memory', '512Mi',
+      '--cpu', '1',
+      '--max-instances', '10',
+      '--set-env-vars', 'NODE_ENV=production'
+    ]
+
+options:
+  logging: CLOUD_LOGGING_ONLY
