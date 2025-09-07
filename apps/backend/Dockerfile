@@ -12,8 +12,8 @@ COPY package*.json ./
 COPY apps/backend/package*.json ./apps/backend/
 COPY packages/*/package*.json ./packages/*/
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install all dependencies first
+RUN npm install && npm cache clean --force
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -21,8 +21,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the backend
-RUN npm run build:backend
+# Install NestJS CLI globally and build
+RUN npm install -g @nestjs/cli
+WORKDIR /app/apps/backend
+RUN nest build
 
 # Production image, copy all the files and run next
 FROM base AS runner
