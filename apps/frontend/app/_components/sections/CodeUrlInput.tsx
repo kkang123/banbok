@@ -2,14 +2,9 @@
 
 import { useState } from "react";
 
-import { SectionProps } from "../../_type/sectionprops.type";
 import { useAuthStore } from "../../_store/authStore";
 
-export const CodeUrlInput: React.FC<SectionProps> = ({
-  isActive,
-  onClick,
-  id,
-}) => {
+export const CodeUrlInput = () => {
   const [codeurl, setCodeurl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,7 +17,6 @@ export const CodeUrlInput: React.FC<SectionProps> = ({
     try {
       setIsLoading(true);
 
-      // 1. 먼저 Next API Route (/api/scrape)로 요청
       const scrapeRes = await fetch("/api/scrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,7 +32,6 @@ export const CodeUrlInput: React.FC<SectionProps> = ({
 
       console.log("크롤링 결과:", title, site, link);
 
-      // 2. 서버로 전송
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/v1/problems`,
         {
@@ -47,27 +40,26 @@ export const CodeUrlInput: React.FC<SectionProps> = ({
             "Content-Type": "application/json",
           },
           credentials: "include",
-          // body: JSON.stringify({ link: codeurl }),
+
           body: JSON.stringify({
             title,
             link,
             site,
           }),
           mode: "cors",
-        }
+        },
       );
 
       console.log("크롤링 결과:", title, site, link);
 
       if (response.ok) {
-        // alert("URL 저장 완료: " + codeurl);
         console.log("✅ 문제 정보 서버 전송 성공 (status 200)");
         alert("문제 정보 저장 완료! " + codeurl + ", " + title + ", " + site);
         setCodeurl("");
       } else {
         const errorData = await response.json();
         alert(
-          "오류가 발생했습니다: " + (errorData.message || response.statusText)
+          "오류가 발생했습니다: " + (errorData.message || response.statusText),
         );
       }
     } catch (error) {
@@ -85,36 +77,33 @@ export const CodeUrlInput: React.FC<SectionProps> = ({
   };
 
   return (
-    <section
-      id={id}
-      className={`min-h-screen w-full flex justify-center items-center bg-white transition-opacity duration-500 px-4 ${
-        isActive ? "opacity-100" : "opacity-50"
-      }`}
-      onClick={onClick}
-    >
+    <section>
       <div className="w-full max-w-sm sm:flex">
         <input
           type="text"
           placeholder={
             isAuthenticated
-              ? "해결한 코테 링크를 작성해주세요..."
+              ? "해결한 코딩테스트 링크를 작성해주세요..."
               : "로그인 후 사용해주세요"
           }
           value={codeurl}
           onChange={(e) => setCodeurl(e.target.value)}
           onKeyDown={handleKeyPress}
-          className="w-full p-2 border border-black 
+          className={`w-full p-2 border-black 
                sm:border-r-0 
                rounded-2xl sm:rounded-tl-2xl sm:rounded-tr-none 
                sm:rounded-bl-2xl sm:rounded-br-none 
                focus:outline-none 
-               text-sm sm:text-base"
-          disabled={isLoading}
+               text-sm sm:text-base 
+               h-10
+              ${isAuthenticated ? "bg-white" : "bg-gray-200 text-gray-500 cursor-not-allowed"}`}
+          style={{ minWidth: "300px" }}
+          disabled={!isAuthenticated || isLoading}
         />
 
         <button
           onClick={handleSubmit}
-          className={`w-full sm:w-auto whitespace-nowrap mt-2 sm:mt-0 px-4 py-2 border rounded-2xl sm:rounded-r-2xl sm:rounded-l-none transition-all ${
+          className={`sw-full h-10 sm:w-auto w-[300px] whitespace-nowrap mt-2 sm:mt-0 px-4 py-2 border rounded-2xl sm:rounded-r-2xl sm:rounded-l-none transition-all flex items-center justify-center ${
             isAuthenticated
               ? isLoading
                 ? "opacity-70 cursor-not-allowed border-blue-500 bg-blue-500 text-white"
