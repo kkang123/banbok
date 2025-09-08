@@ -1,5 +1,5 @@
-# Use Node.js 18 Alpine as base image
-FROM node:18-alpine AS base
+# Use Node.js 23 Alpine as base image
+FROM node:23-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -29,7 +29,7 @@ RUN npm install -g @nestjs/cli
 WORKDIR /app/packages/shared
 RUN npm run build || echo "No shared build needed"
 
-WORKDIR /app/packages/log  
+WORKDIR /app/packages/log
 RUN npm run build || echo "No log build needed"
 
 # Build backend
@@ -53,7 +53,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN chown -R nestjs:nodejs /app
 USER nestjs
 
-EXPOSE 8080
+EXPOSE 3001
 
 ENV NODE_ENV=production
 

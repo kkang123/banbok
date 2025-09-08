@@ -11,7 +11,7 @@ async function bootstrap() {
   app.enableCors(CorsConfig.getCorsOptions());
   SwaggerConfig.setUp(app)
   const PORT = process.env.PORT;
-  await app.listen(PORT || 8080);
+  await app.listen(PORT || 3001);
 }
 
 bootstrap();
