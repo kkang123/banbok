@@ -69,6 +69,7 @@ jobs:
             --set-env-vars SMTP_HOST="${{ secrets.SMTP_HOST }}" \
             --set-env-vars SMTP_USER="${{ secrets.SMTP_USER }}" \
             --set-env-vars SMTP_PASS="${{ secrets.SMTP_PASS }}" \
+            --set-env-vars REDIS_URL="${{ secrets.REDIS_URL }}" \
             --quiet
 
       - name: Get service URL

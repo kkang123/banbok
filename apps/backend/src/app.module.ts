@@ -17,10 +17,14 @@ import { MailModule } from './mail/mail.module';
     }),
     ScheduleModule.forRoot(),
     BullModule.forRoot({
-      connection: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: parseInt(process.env.REDIS_PORT, 10) || 6379,
-      },
+      connection: process.env.REDIS_URL 
+        ? { 
+            url: process.env.REDIS_URL 
+          }
+        : {
+            host: process.env.REDIS_HOST || 'localhost',
+            port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+          },
     }),
     DatabaseModule,
     AuthModule,
