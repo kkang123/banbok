@@ -53,7 +53,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN chown -R nestjs:nodejs /app
 USER nestjs
 
-EXPOSE 3001
+EXPOSE 8080
 
 ENV NODE_ENV=production
 

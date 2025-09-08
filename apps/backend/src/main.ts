@@ -10,7 +10,8 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors(CorsConfig.getCorsOptions());
   SwaggerConfig.setUp(app)
-  await app.listen(3001);
+  const PORT = process.env.PORT;
+  await app.listen(PORT || 8080);
 }
 
 bootstrap();
