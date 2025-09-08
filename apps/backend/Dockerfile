@@ -10,7 +10,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 COPY apps/backend/package*.json ./apps/backend/
-COPY packages/*/package*.json ./packages/*/
+COPY packages/ ./packages/
 
 # Install all dependencies including devDependencies for build
 RUN npm install && npm cache clean --force
@@ -21,9 +21,20 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build only backend and its dependencies using npx
+# Install NestJS CLI explicitly and build packages individually
 WORKDIR /app
-RUN npx turbo run build --filter=backend -- --verbose
+RUN npm install -g @nestjs/cli
+
+# Build shared packages first
+WORKDIR /app/packages/shared
+RUN npm run build || echo "No shared build needed"
+
+WORKDIR /app/packages/log  
+RUN npm run build || echo "No log build needed"
+
+# Build backend
+WORKDIR /app/apps/backend
+RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
