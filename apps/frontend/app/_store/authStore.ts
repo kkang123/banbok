@@ -13,10 +13,19 @@ export const useAuthStore = create<AuthState>()(
       fetchUser: async () => {
         set({ isLoading: true });
         try {
+          const token = localStorage.getItem("accessToken");
+
+          if (!token) {
+            set({ user: null });
+            return;
+          }
+
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/v1/members/me`,
             {
-              credentials: "include",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
           );
 
