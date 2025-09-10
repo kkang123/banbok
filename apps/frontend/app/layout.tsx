@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import VoiceButton from "./_components/Voice/VoiceButton";
 import AuthInitializer from "./_components/AuthInitializer";
 import PomodoroWrapper from "./_components/Timer/PomodoroWrapper";
+import AccessTokenHandler from "./_components/AccessTokenHandler";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <AccessTokenHandler />
         <VoiceButton />
         <AuthInitializer />
         <PomodoroWrapper />
