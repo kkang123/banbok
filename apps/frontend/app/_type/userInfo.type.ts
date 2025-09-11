@@ -4,6 +4,7 @@ export interface AuthState {
   user: UserInfo | null;
   isLoading: boolean;
   hasHydrated: boolean;
+  token: string | null;
   fetchUser: () => Promise<void>;
   logout: () => Promise<void>;
 }
