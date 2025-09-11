@@ -9,11 +9,13 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isLoading: false,
       hasHydrated: false,
+      token: null,
 
       fetchUser: async () => {
         set({ isLoading: true });
         try {
           const token = localStorage.getItem("accessToken");
+          set({ token });
 
           if (!token) {
             set({ user: null });
@@ -60,7 +62,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      partialize: (state) => ({ user: state.user }),
+      partialize: (state) => ({ user: state.user, token: state.token }),
     },
   ),
 );

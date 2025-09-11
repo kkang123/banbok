@@ -9,6 +9,7 @@ export const CodeUrlInput = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
   const isAuthenticated = !!user;
 
   const handleSubmit = async () => {
@@ -38,8 +39,8 @@ export const CodeUrlInput = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
-          credentials: "include",
 
           body: JSON.stringify({
             title,
