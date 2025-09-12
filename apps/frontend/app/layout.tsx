@@ -21,9 +21,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "반복",
   description: "코딩 테스트의 반복 학습을 도와주는 웹 사이트 입니다.",
-  icons: {
-    icon: "/banbok.svg",
-  },
 };
 
 export default function RootLayout({
