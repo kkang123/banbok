@@ -103,7 +103,7 @@ const PomodoroTimer = () => {
 
       {/*  */}
       <div className="hidden sm:block desktop-timer">
-        <div className="fixed top-2/7 left-2 p-4 rounded-lg shadow-md bg-white w-42 -translate-y-1/2">
+        <div className="fixed top-[28.57%] left-2 p-4 rounded-lg shadow-md bg-white w-40 -translate-y-1/2">
           <div className="text-center text-3xl font-bold mb-4">
             {formatTime(timeLeft)}
           </div>
