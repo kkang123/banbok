@@ -1,5 +1,7 @@
 "use client";
 
+import { Toaster } from "react-hot-toast";
+
 import { Title } from "./Title";
 
 const Home = () => {
@@ -10,6 +12,8 @@ const Home = () => {
           <Title />
         </div>
       </div>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </main>
   );
 };

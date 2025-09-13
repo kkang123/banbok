@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import { useAuthStore } from "../../_store/authStore";
 
@@ -54,18 +55,40 @@ export const CodeUrlInput = () => {
       console.log("크롤링 결과:", title, site, link);
 
       if (response.ok) {
-        console.log("✅ 문제 정보 서버 전송 성공 (status 200)");
-        alert("문제 정보 저장 완료! " + codeurl + ", " + title + ", " + site);
+        toast.success(`문제 등록 완료 (${title} - ${site})`, {
+          duration: 3000,
+          style: {
+            background: "rgba(37, 99, 235, 0.9)",
+            color: "#fff",
+            padding: "12px 20px",
+            borderRadius: "20px",
+            fontWeight: "bold",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+            backdropFilter: "blur(4px)",
+            textAlign: "center",
+          },
+        });
         setCodeurl("");
       } else {
         const errorData = await response.json();
-        alert(
-          "오류가 발생했습니다: " + (errorData.message || response.statusText),
-        );
+        toast.error("오류: " + (errorData.message || response.statusText), {
+          duration: 3000,
+          style: {
+            background: "#808080",
+            color: "#fff",
+            padding: "12px 20",
+            borderRadius: "20px",
+            fontWeight: "bold",
+            textAlign: "center",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+            backdropFilter: "blur(4px)",
+          },
+          icon: "⚠️",
+        });
       }
     } catch (error) {
       console.error("서버 요청 실패:", error);
-      alert("서버 요청 중 오류가 발생했습니다.");
+      toast.error("서버 요청 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
