@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 
 import { useAuthStore } from "../../_store/authStore";
 
+import { successToastOptions, errorToastOptions } from "./CodeUrlInput.style";
+
 export const CodeUrlInput = () => {
   const [codeurl, setCodeurl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -55,36 +57,17 @@ export const CodeUrlInput = () => {
       console.log("크롤링 결과:", title, site, link);
 
       if (response.ok) {
-        toast.success(`문제 등록 완료 (${title} - ${site})`, {
-          duration: 3000,
-          style: {
-            background: "rgba(37, 99, 235, 0.9)",
-            color: "#fff",
-            padding: "12px 20px",
-            borderRadius: "20px",
-            fontWeight: "bold",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-            backdropFilter: "blur(4px)",
-            textAlign: "center",
-          },
-        });
+        toast.success(
+          `문제 등록 완료 (${site} : ${title})`,
+          successToastOptions,
+        );
         setCodeurl("");
       } else {
         const errorData = await response.json();
-        toast.error("오류: " + (errorData.message || response.statusText), {
-          duration: 3000,
-          style: {
-            background: "#808080",
-            color: "#fff",
-            padding: "12px 20",
-            borderRadius: "20px",
-            fontWeight: "bold",
-            textAlign: "center",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-            backdropFilter: "blur(4px)",
-          },
-          icon: "⚠️",
-        });
+        toast.error(
+          "오류: " + (errorData.message || response.statusText),
+          errorToastOptions,
+        );
       }
     } catch (error) {
       console.error("서버 요청 실패:", error);
