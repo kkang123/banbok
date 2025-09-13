@@ -5,7 +5,11 @@ import toast from "react-hot-toast";
 
 import { useAuthStore } from "../../_store/authStore";
 
-import { successToastOptions, errorToastOptions } from "./CodeUrlInput.style";
+import {
+  successToastOptions,
+  errorToastOptions,
+  serverErrorToastOptions,
+} from "./CodeUrlInput.style";
 
 export const CodeUrlInput = () => {
   const [codeurl, setCodeurl] = useState("");
@@ -71,7 +75,7 @@ export const CodeUrlInput = () => {
       }
     } catch (error) {
       console.error("서버 요청 실패:", error);
-      toast.error("서버 요청 중 오류가 발생했습니다.");
+      toast.error("서버 요청 중 오류가 발생했습니다.", serverErrorToastOptions);
     } finally {
       setIsLoading(false);
     }
