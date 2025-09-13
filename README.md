@@ -15,7 +15,7 @@
 
 ## 📝 프로젝트 소개
 
-**BANBOK**은 코딩테스트 문제의 효과적인 반복 학습을 위한 웹 서비스입니다. 
+**BANBOK**은 코딩테스트 문제의 효과적인 반복 학습을 위한 웹 서비스입니다.
 문제를 한 번 푸는 것에서 끝나는 것이 아니라, 과학적인 학습 방법론에 기반하여 1일, 3일, 7일, 21일 후에 다시 풀어보도록 리마인더를 제공합니다.
 
 ### 🎯 핵심 기능
@@ -65,6 +65,7 @@ banbok/
 ## 🛠️ 기술 스택
 
 ### 프론트엔드
+
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
@@ -73,6 +74,7 @@ banbok/
 - **Web Scraping**: Cheerio (클라이언트 사이드)
 
 ### 백엔드
+
 - **Framework**: NestJS
 - **Language**: TypeScript
 - **Database**: PostgreSQL
@@ -83,6 +85,7 @@ banbok/
 - **Template Engine**: Pug
 
 ### 인프라 및 도구
+
 - **Monorepo**: Turbo
 - **Package Manager**: npm
 - **Database Migrations**: Drizzle Kit
@@ -102,17 +105,20 @@ banbok/
 ### 설치
 
 1. 저장소 클론
+
 ```bash
 git clone https://github.com/your-username/banbok.git
 cd banbok
 ```
 
 2. 의존성 설치
+
 ```bash
 npm install
 ```
 
 3. 환경 변수 설정
+
 ```bash
 # 백엔드 환경변수 (.env.local)
 DATABASE_URL=postgresql://username:password@localhost:5432/banbok
@@ -135,6 +141,7 @@ SMTP_PASS=your-email-password
 ```
 
 4. 데이터베이스 마이그레이션
+
 ```bash
 npm run db:migrate --workspace=apps/backend
 ```
@@ -142,6 +149,7 @@ npm run db:migrate --workspace=apps/backend
 ### 실행
 
 #### 개발 환경
+
 ```bash
 # 전체 프로젝트 개발 서버 실행
 npm run dev
@@ -154,6 +162,7 @@ npm run dev:backend
 ```
 
 #### 프로덕션 환경
+
 ```bash
 # 빌드
 npm run build
@@ -178,20 +187,23 @@ npm run test:cov --workspace=apps/backend
 ## 🔄 주요 워크플로우
 
 ### 1. 문제 제출 프로세스
+
 1. 사용자가 코딩테스트 문제 링크 제출
 2. 프론트엔드에서 해당 사이트의 크롤러를 통해 문제 정보 추출
 3. 백엔드로 문제 정보 전송
 4. 데이터베이스에 저장 및 스케줄링 작업 등록
 
 ### 2. 리마인더 시스템
+
 1. BullMQ를 통한 지연 작업 스케줄링
 2. 1일, 3일, 7일, 21일 후 자동 트리거
 3. 이메일 템플릿을 통한 개인화된 알림 발송
 4. 사용자 클릭 추적 및 학습 상태 업데이트
 
 ### 3. 지원 플랫폼별 크롤러
+
 - **백준(Baekjoon)**: `acmicpc.net` 도메인 처리
-- **프로그래머스(Programmers)**: `programmers.co.kr` 도메인 처리  
+- **프로그래머스(Programmers)**: `programmers.co.kr` 도메인 처리
 - **리트코드(LeetCode)**: `leetcode.com` 도메인 처리
 
 ## 📈 로드맵
@@ -225,7 +237,7 @@ npm run test:cov --workspace=apps/backend
 
 <div align="center">
 
-**[🌐 웹사이트](https://banbok.vercel.app) • [📧 이메일](mailto:contact@banbok.com) • [🐛 버그 리포트](https://github.com/your-username/banbok/issues)**
+**[🌐 웹사이트](https://banbok-coding.vercel.app) • [📧 이메일](mailto:contact@banbok.com) • [🐛 버그 리포트](https://github.com/your-username/banbok/issues)**
 
 Made with ❤️ by BANBOK Team
 

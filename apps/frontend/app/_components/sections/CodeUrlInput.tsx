@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import { useAuthStore } from "../../_store/authStore";
+
+import { successToastOptions, errorToastOptions } from "./CodeUrlInput.style";
 
 export const CodeUrlInput = () => {
   const [codeurl, setCodeurl] = useState("");
@@ -54,18 +57,21 @@ export const CodeUrlInput = () => {
       console.log("크롤링 결과:", title, site, link);
 
       if (response.ok) {
-        console.log("✅ 문제 정보 서버 전송 성공 (status 200)");
-        alert("문제 정보 저장 완료! " + codeurl + ", " + title + ", " + site);
+        toast.success(
+          `문제 등록 완료 (${site} : ${title})`,
+          successToastOptions,
+        );
         setCodeurl("");
       } else {
         const errorData = await response.json();
-        alert(
-          "오류가 발생했습니다: " + (errorData.message || response.statusText),
+        toast.error(
+          "오류: " + (errorData.message || response.statusText),
+          errorToastOptions,
         );
       }
     } catch (error) {
       console.error("서버 요청 실패:", error);
-      alert("서버 요청 중 오류가 발생했습니다.");
+      toast.error("서버 요청 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
