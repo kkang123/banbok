@@ -23,10 +23,6 @@ const PomodoroTimer = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("toggleTimerBtn 함수가 생성됨");
-  }, [toggleTimerBtn]);
-
   // 리셋 버튼
   const resetTimer = useCallback(() => {
     setTimeLeft(0);
@@ -101,7 +97,6 @@ const PomodoroTimer = () => {
         </div>
       </div>
 
-      {/*  */}
       <div className="hidden sm:block desktop-timer">
         <div className="fixed top-[28.57%] left-2 p-4 rounded-lg shadow-md bg-white w-40 -translate-y-1/2">
           <div className="text-center text-3xl font-bold mb-4">
