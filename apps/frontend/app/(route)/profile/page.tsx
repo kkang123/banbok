@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import { useAuthStore } from "../../_store/authStore";
 
+import Header from "@/app/_components/Header/Header";
+
 export default function ProfilePage() {
   const router = useRouter();
   const { user, isLoading, hasHydrated } = useAuthStore();
@@ -30,27 +32,30 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+      <Header />
+      <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-20">
         <h1 className="text-2xl font-bold mb-6 text-center">내 프로필</h1>
 
-        <div className="flex items-center gap-4 mb-6">
-          {user.profileImage ? (
-            <Image
-              src={user.profileImage}
-              alt="프로필 이미지"
-              width={80}
-              height={80}
-              className="rounded-full border-2 border-gray-200"
-            />
-          ) : (
-            <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
-              <span className="text-xl text-gray-500">
-                {user.name?.charAt(0) || "?"}
-              </span>
-            </div>
-          )}
+        <div className="flex items-center gap-8 mb-6 p-2">
+          <div className="flex-shrink-0 w-24 h-24 overflow-hidden rounded-full border-2 border-gray-200">
+            {user.profileImage ? (
+              <Image
+                src={user.profileImage}
+                alt="프로필 이미지"
+                width={96}
+                height={96}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <span className="text-xl text-gray-500">
+                  {user.name?.charAt(0) || "?"}
+                </span>
+              </div>
+            )}
+          </div>
 
-          <div>
+          <div className="flex flex-col justify-center">
             <p className="text-xl font-semibold">{user.name}</p>
             <p className="text-gray-600">@{userId}</p>
             <p className="text-gray-500 text-sm mt-1">{user.email}</p>
