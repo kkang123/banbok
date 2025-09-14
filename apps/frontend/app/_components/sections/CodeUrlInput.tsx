@@ -58,24 +58,24 @@ export const CodeUrlInput = () => {
         },
       );
 
-      console.log("크롤링 결과:", title, site, link);
-
       if (response.ok) {
-        toast.success(
-          `문제 등록 완료 (${site} : ${title})`,
-          successToastOptions,
-        );
+        toast.success(`문제 등록 (${site} : ${title})`, successToastOptions);
         setCodeurl("");
       } else {
         const errorData = await response.json();
         toast.error(
-          "오류: " + (errorData.message || response.statusText),
+          errorData.message || response.statusText,
           errorToastOptions,
         );
       }
-    } catch (error) {
-      console.error("서버 요청 실패:", error);
-      toast.error("서버 요청 중 오류가 발생했습니다.", serverErrorToastOptions);
+      // } catch (error) {
+      //   console.error("서버 요청 실패:", error);
+      //   toast.error("서버 요청 중 오류가 발생했습니다.", serverErrorToastOptions);
+    } catch (error: any) {
+      toast.error(
+        error.message || "서버 요청 중 오류가 발생했습니다.",
+        serverErrorToastOptions,
+      );
     } finally {
       setIsLoading(false);
     }

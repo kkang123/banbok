@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
-      { message: "크롤링 실패", error },
-      { status: 500 }
+      { message: "올바르지 않은 URL 형식입니다", error },
+      { status: 400 },
     );
   }
 }
