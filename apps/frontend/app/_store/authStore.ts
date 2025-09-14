@@ -50,11 +50,15 @@ export const useAuthStore = create<AuthState>()(
 
       logout: async () => {
         try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-          });
-          set({ user: null });
+          // 추후 도메인 추가시 적용 예정
+          // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/logout`, {
+          //   method: "POST",
+          //   credentials: "include",
+          // });
+
+          localStorage.removeItem("accessToken");
+
+          set({ user: null, token: null });
         } catch (error) {
           console.error("로그아웃 실패:", error);
         }
