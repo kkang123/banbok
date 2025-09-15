@@ -1,8 +1,4 @@
-import { useState } from "react";
-
 import Link from "next/link";
-
-import { useAuthStore } from "../../_store/authStore";
 
 import MobileMenu from "../Menu/MobileMenu";
 import DesktopMenu from "../Menu/DesktopMenu";
