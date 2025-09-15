@@ -12,22 +12,24 @@ const MobileMenu = () => {
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  if (!user) {
-    return <LoginStatusButton />;
-  }
-
   return (
     <div className="sm:hidden">
-      <MenuButton onClick={toggleMenu} />
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-32 bg-gray-700 rounded-md shadow-lg py-1 z-50">
-          <div className="px-4 py-2">
-            <ProfileButton />
-          </div>
-          <div className="px-4 py-2">
-            <LoginStatusButton />
-          </div>
-        </div>
+      {!user ? (
+        <LoginStatusButton />
+      ) : (
+        <>
+          <MenuButton onClick={toggleMenu} />
+          {isOpen && (
+            <div className="absolute right-0 mt-2 w-32 bg-gray-700 rounded-md shadow-lg py-1 z-50">
+              <div className="px-4 py-2">
+                <ProfileButton />
+              </div>
+              <div className="px-4 py-2">
+                <LoginStatusButton />
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
