@@ -11,12 +11,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <div className="text-center mb-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+        <div className="mb-8 text-center">
           <h1
             onClick={handleTitleClick}
-            className="text-3xl font-bold text-gray-800 cursor-pointer"
+            className="cursor-pointer text-3xl font-bold text-gray-800"
           >
             반복
           </h1>

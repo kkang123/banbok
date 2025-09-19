@@ -2,10 +2,10 @@ import Link from "next/link";
 
 import MobileMenu from "../Menu/MobileMenu";
 import DesktopMenu from "../Menu/DesktopMenu";
-        
+
 const Header = () => {
   return (
-    <header className="flex justify-between absolute top-0 left-0 w-full bg-gray-800 text-white p-4 z-50 pointer-events: none;">
+    <header className="pointer-events: none; absolute top-0 left-0 z-50 flex w-full justify-between bg-gray-800 p-4 text-white">
       <Link href="/" className="text-xl font-bold">
         Banbok
       </Link>

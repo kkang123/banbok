@@ -7,7 +7,7 @@ import { useVoiceCommandStore } from "../../_store/voiceCommands";
 const LogoutButton = () => {
   const logout = useAuthStore((state) => state.logout);
   const setCommandHandler = useVoiceCommandStore(
-    (state) => state.setCommandHandler
+    (state) => state.setCommandHandler,
   );
 
   const handleLogout = useCallback(async () => {
