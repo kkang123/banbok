@@ -8,7 +8,7 @@ export function NaverLogin() {
   return (
     <button
       onClick={handleNaverLogin}
-      className="mt-2 p-2 w-full flex items-center justify-center gap-2 border-2 border-green-500 rounded-lg hover:bg-green-500 hover:text-white transition-colors"
+      className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-green-500 p-2 transition-colors hover:bg-green-500 hover:text-white"
       aria-label="네이버 로그인"
     >
       <Image
@@ -30,7 +30,7 @@ export function GoogleLogin() {
   return (
     <button
       onClick={handleGoogleLogin}
-      className="mt-2 p-2 w-full flex items-center justify-center gap-2 border-2 border-red-400 rounded-lg hover:bg-red-400 hover:text-white transition-colors"
+      className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-red-400 p-2 transition-colors hover:bg-red-400 hover:text-white"
       aria-label="구글 로그인"
     >
       <Image

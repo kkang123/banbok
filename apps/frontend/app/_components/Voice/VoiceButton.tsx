@@ -23,7 +23,7 @@ export default function VoiceButton() {
       {!show && (
         <button
           onClick={handleClick}
-          className="fixed bottom-4 right-4 p-2 bg-gray-300 hover:bg-gray-400 text-white rounded-full z-[100]"
+          className="fixed right-4 bottom-4 z-[100] rounded-full bg-gray-300 p-2 text-white hover:bg-gray-400"
           aria-label="음성 인식 켜기"
         >
           <Image
@@ -31,7 +31,7 @@ export default function VoiceButton() {
             alt="음성 인식 켜기"
             width={24}
             height={24}
-            className="w-6 h-6"
+            className="h-6 w-6"
           />
         </button>
       )}

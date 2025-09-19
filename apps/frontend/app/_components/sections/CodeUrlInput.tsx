@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
+import clsx from "clsx";
 
 import { useAuthStore } from "../../_store/authStore";
 
@@ -68,9 +69,6 @@ export const CodeUrlInput = () => {
           errorToastOptions,
         );
       }
-      // } catch (error) {
-      //   console.error("서버 요청 실패:", error);
-      //   toast.error("서버 요청 중 오류가 발생했습니다.", serverErrorToastOptions);
     } catch (error: any) {
       toast.error(
         error.message || "서버 요청 중 오류가 발생했습니다.",
@@ -100,27 +98,26 @@ export const CodeUrlInput = () => {
           value={codeurl}
           onChange={(e) => setCodeurl(e.target.value)}
           onKeyDown={handleKeyPress}
-          className={`w-full p-2 border-black 
-               sm:border-r-0 
-               rounded-2xl sm:rounded-tl-2xl sm:rounded-tr-none 
-               sm:rounded-bl-2xl sm:rounded-br-none 
-               focus:outline-none 
-               text-sm sm:text-base 
-               h-10
-              ${isAuthenticated ? "bg-white" : "bg-gray-200 text-gray-500 cursor-not-allowed"}`}
+          className={clsx(
+            "h-10 w-full rounded-2xl border-black p-2 text-sm focus:outline-none sm:rounded-tl-2xl sm:rounded-tr-none sm:rounded-br-none sm:rounded-bl-2xl sm:border-r-0 sm:text-base",
+            isAuthenticated
+              ? "bg-white"
+              : "cursor-not-allowed bg-gray-200 text-gray-500",
+          )}
           style={{ minWidth: "300px" }}
           disabled={!isAuthenticated || isLoading}
         />
 
         <button
           onClick={handleSubmit}
-          className={`sw-full h-10 sm:w-auto w-[300px] whitespace-nowrap mt-2 sm:mt-0 px-4 py-2 border rounded-2xl sm:rounded-r-2xl sm:rounded-l-none transition-all flex items-center justify-center ${
+          className={clsx(
+            "sw-full mt-2 flex h-10 w-[300px] items-center justify-center rounded-2xl border px-4 py-2 whitespace-nowrap transition-all sm:mt-0 sm:w-auto sm:rounded-l-none sm:rounded-r-2xl",
             isAuthenticated
               ? isLoading
-                ? "opacity-70 cursor-not-allowed border-blue-500 bg-blue-500 text-white"
-                : "hover:bg-blue-600 border-blue-500 bg-blue-500 text-white"
-              : "bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
+                ? "cursor-not-allowed border-blue-500 bg-blue-500 text-white opacity-70"
+                : "border-blue-500 bg-blue-500 text-white hover:bg-blue-600"
+              : "cursor-not-allowed border-gray-300 bg-gray-300 text-gray-500",
+          )}
           disabled={isLoading || !isAuthenticated}
         >
           {isLoading ? "전송 중..." : "전송"}

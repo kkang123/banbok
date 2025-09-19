@@ -21,7 +21,7 @@ export default function ProfilePage() {
   }, [hasHydrated, isLoading, user, router]);
 
   if (!hasHydrated || isLoading) {
-    return <div className="text-center p-4">로딩 중...</div>;
+    return <div className="p-4 text-center">로딩 중...</div>;
   }
 
   if (!isAuthenticated || !user) {
@@ -33,21 +33,21 @@ export default function ProfilePage() {
   return (
     <>
       <Header />
-      <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-20">
-        <h1 className="text-2xl font-bold mb-6 text-center">내 프로필</h1>
+      <div className="mx-auto mt-20 max-w-md rounded-lg bg-white p-6 shadow-md">
+        <h1 className="mb-6 text-center text-2xl font-bold">내 프로필</h1>
 
-        <div className="flex items-center gap-8 mb-6 p-2">
-          <div className="flex-shrink-0 w-24 h-24 overflow-hidden rounded-full border-2 border-gray-200">
+        <div className="mb-6 flex items-center gap-8 p-2">
+          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-full border-2 border-gray-200">
             {user.profileImage ? (
               <Image
                 src={user.profileImage}
                 alt="프로필 이미지"
                 width={96}
                 height={96}
-                className="object-cover w-full h-full"
+                className="h-full w-full object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <div className="flex h-full w-full items-center justify-center bg-gray-200">
                 <span className="text-xl text-gray-500">
                   {user.name?.charAt(0) || "?"}
                 </span>
@@ -58,7 +58,7 @@ export default function ProfilePage() {
           <div className="flex flex-col justify-center">
             <p className="text-xl font-semibold">{user.name}</p>
             <p className="text-gray-600">@{userId}</p>
-            <p className="text-gray-500 text-sm mt-1">{user.email}</p>
+            <p className="mt-1 text-sm text-gray-500">{user.email}</p>
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export default function ProfilePage() {
                 .logout()
                 .then(() => router.push("/login"))
             }
-            className="w-full py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition"
+            className="w-full rounded-md bg-red-50 py-2 text-red-600 transition hover:bg-red-100"
           >
             로그아웃
           </button>

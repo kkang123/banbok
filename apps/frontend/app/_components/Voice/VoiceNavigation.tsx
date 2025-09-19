@@ -104,10 +104,10 @@ const VoiceNavigation = ({ autoStart = false }) => {
   }, [autoStart]);
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-end gap-2">
+    <div className="fixed right-4 bottom-4 flex flex-col items-end gap-2">
       <button
         onClick={toggleVoiceRecognition}
-        className={`p-2 rounded-full transition-colors ${
+        className={`rounded-full p-2 transition-colors ${
           isEnabled
             ? "bg-blue-500 hover:bg-blue-600"
             : "bg-gray-300 hover:bg-gray-400"
@@ -119,11 +119,11 @@ const VoiceNavigation = ({ autoStart = false }) => {
           alt={isEnabled ? "음성 인식 켜짐" : "음성 인식 꺼짐"}
           width={24}
           height={24}
-          className="w-6 h-6"
+          className="h-6 w-6"
         />
       </button>
       {isEnabled && (
-        <div className="bg-blue-500 text-white px-4 py-2 rounded-full">
+        <div className="rounded-full bg-blue-500 px-4 py-2 text-white">
           {isListening ? "음성 인식 중..." : "음성 인식 대기 중"}
         </div>
       )}
