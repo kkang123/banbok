@@ -6,7 +6,11 @@ import { useAuthStore } from "@/app/_store/authStore";
 
 import { Problem, HeatmapValue } from "@/app/_type/problem";
 import { COLOR_SCALE } from "@/app/_constants/colorScale";
-import { API_BASE_URL, ENDPOINTS } from "@/app/_constants/api";
+import {
+  fetchUserData,
+  fetchProblems,
+  fetchProblemsByDate,
+} from "@/app/api/problem";
 
 interface ProblemHeatmapProps {
   onDateSelect: (date: string, problems: Problem[]) => void;
@@ -19,19 +23,12 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
 
   const token = useAuthStore((state) => state.token);
 
-  // 사용자 데이터 호출 - 연도 추출을 위한
   useEffect(() => {
     if (!token) return;
 
-    const fetchUserData = async () => {
+    const loadUser = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}${ENDPOINTS.ME}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = await res.json();
+        const data = await fetchUserData(token);
         const startYear = new Date(data.createdAt).getFullYear();
         const currentYear = new Date().getFullYear();
         const yearList = Array.from(
@@ -46,30 +43,15 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
       }
     };
 
-    fetchUserData();
+    loadUser();
   }, [token]);
 
-  // 문제 호출
   useEffect(() => {
     if (!token || !selectedYear) return;
 
-    const fetchProblems = async () => {
+    const loadProblems = async () => {
       try {
-        const res = await fetch(
-          `${API_BASE_URL}${ENDPOINTS.PROBLEMS}?year=${selectedYear}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        if (!res.ok) {
-          throw new Error(`서버 오류: ${res.status}`);
-        }
-
-        const result: Problem[] = await res.json();
-        console.log("📌 서버 JSON 데이터:", result);
+        const result = await fetchProblems(token);
 
         const mapped: HeatmapValue[] = result.reduce<HeatmapValue[]>(
           (acc, item) => {
@@ -86,33 +68,24 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
           [],
         );
 
-        console.log("📌 변환된 Heatmap 데이터:", mapped);
         setData(mapped);
       } catch (err) {
         console.error("❌ API 호출 에러:", err);
       }
     };
 
-    fetchProblems();
+    loadProblems();
   }, [token, selectedYear]);
 
-  // 날짜 클릭 핸들러
   const handleDayClick = async (value?: ReactCalendarHeatmapValue<string>) => {
     if (!value?.date) return;
 
-    const castedValue = value as HeatmapValue;
-
-    if (!castedValue.date) return;
-
-    const res = await fetch(
-      `${API_BASE_URL}${ENDPOINTS.PROBLEMS}?date=${value.date}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-    const result: Problem[] = await res.json();
-
-    onDateSelect(value.date, result);
+    try {
+      const result = await fetchProblemsByDate(token!, value.date);
+      onDateSelect(value.date, result);
+    } catch (err) {
+      console.error("❌ 날짜별 문제 불러오기 실패:", err);
+    }
   };
 
   const startDate = selectedYear
@@ -122,7 +95,6 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
 
   return (
     <div className="mt-6 overflow-x-auto p-4 pl-20 shadow-md">
-      {/* 연도 탭 */}
       <div className="ml-4 flex gap-2">
         {years.map((year) => (
           <button
@@ -138,7 +110,6 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
         ))}
       </div>
 
-      {/* 요일, 히트맵 */}
       <div className="mx-auto flex w-fit">
         <div className="mt-18 mr-2 flex flex-col gap-0.5 text-xs leading-tight text-gray-500">
           <span>일</span>
