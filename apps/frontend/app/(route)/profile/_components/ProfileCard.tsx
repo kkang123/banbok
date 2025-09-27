@@ -12,6 +12,8 @@ interface ProfileCardProps {
 export default function ProfileCard({ user }: ProfileCardProps) {
   const router = useRouter();
 
+  const logout = useAuthStore((state) => state.logout);
+
   const userId = user.email?.split("@")[0] || "user";
 
   return (
@@ -48,12 +50,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
 
         <div className="border-t pt-4">
           <button
-            onClick={() =>
-              useAuthStore
-                .getState()
-                .logout()
-                .then(() => router.push("/login"))
-            }
+            onClick={logout}
             className="w-full rounded-md bg-red-50 py-2 text-red-600 transition hover:bg-red-100"
           >
             로그아웃
