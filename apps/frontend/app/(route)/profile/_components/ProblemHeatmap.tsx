@@ -55,14 +55,11 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
 
     const fetchProblems = async () => {
       try {
-        const res = await fetch(
-          `${API_BASE_URL}${ENDPOINTS.PROBLEMS}?year=${selectedYear}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const res = await fetch(`${API_BASE_URL}${ENDPOINTS.PROBLEMS}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
 
         if (!res.ok) {
           throw new Error(`서버 오류: ${res.status}`);
