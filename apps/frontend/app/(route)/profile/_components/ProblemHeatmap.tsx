@@ -95,22 +95,24 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
 
   return (
     <div className="mt-6 overflow-x-auto p-4 pl-20 shadow-md">
-      <div className="ml-4 flex gap-2">
-        {years.map((year) => (
-          <button
-            key={year}
-            onClick={() => setSelectedYear(year)}
-            className={clsx(
-              "rounded px-3 py-1",
-              selectedYear === year ? "bg-blue-500 text-white" : "bg-gray-200",
-            )}
-          >
-            {year}
-          </button>
-        ))}
-      </div>
-
       <div className="mx-auto flex w-fit">
+        <div className="my-auto flex h-full flex-col justify-center space-y-2 p-4 pl-0">
+          {years.map((year) => (
+            <button
+              key={year}
+              onClick={() => setSelectedYear(year)}
+              className={clsx(
+                "rounded-full px-4 py-1 text-sm font-medium transition-colors",
+                selectedYear === year
+                  ? "bg-blue-500 text-white shadow-md"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200",
+              )}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+
         <div className="mt-18 mr-2 flex flex-col gap-0.5 text-xs leading-tight text-gray-500">
           <span>일</span>
           <span>월</span>
