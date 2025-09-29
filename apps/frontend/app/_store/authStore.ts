@@ -3,6 +3,8 @@ import { persist } from "zustand/middleware";
 
 import { AuthState } from "../_type/userInfo.type";
 
+import { API_BASE_URL, ENDPOINTS } from "../_constants/api";
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -22,14 +24,11 @@ export const useAuthStore = create<AuthState>()(
             return;
           }
 
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/v1/members/me`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
+          const res = await fetch(`${API_BASE_URL}${ENDPOINTS.ME}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-          );
+          });
 
           const contentType = res.headers.get("content-type");
           const text = await res.text();
