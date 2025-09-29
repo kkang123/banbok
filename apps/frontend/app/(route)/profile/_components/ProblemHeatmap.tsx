@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useAuthStore } from "@/app/_store/authStore";
 import { useProblems } from "@/app/_hooks/useProblems";
 
-import { Problem, HeatmapValue } from "@/app/_type/problem";
+import { Problem } from "@/app/_type/problem";
 import { COLOR_SCALE } from "@/app/_constants/colorScale";
 
 interface ProblemHeatmapProps {
