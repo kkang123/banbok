@@ -69,11 +69,12 @@ export const CodeUrlInput = () => {
           errorToastOptions,
         );
       }
-    } catch (error: any) {
-      toast.error(
-        error.message || "서버 요청 중 오류가 발생했습니다.",
-        serverErrorToastOptions,
-      );
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "서버 요청 중 오류가 발생했습니다.";
+      toast.error(message, serverErrorToastOptions);
     } finally {
       setIsLoading(false);
     }
