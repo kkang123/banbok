@@ -5,6 +5,7 @@ import { useAuthStore } from "@/app/_store/authStore";
 import { useUser } from "@/app/_hooks/useUser";
 import { useProblems } from "@/app/_hooks/useProblems";
 import { useProblemByDate } from "@/app/_hooks/useProblemByDate";
+import ProblemHeatmapSkeleton from "./ProblemHeatmapSkeleton";
 
 import { Problem } from "@/app/_type/problem";
 import { COLOR_SCALE } from "@/app/_constants/colorScale";
@@ -46,9 +47,12 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
   const loading = userLoading || problemsLoading;
   const error = userError || problemsError || dateError;
 
+  if (loading) {
+    return <ProblemHeatmapSkeleton />;
+  }
+
   return (
     <div className="mt-6 overflow-x-auto p-4 pl-20 shadow-md">
-      {loading && <p className="text-gray-500">데이터 불러오는 중...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       <div className="mx-auto flex w-fit">

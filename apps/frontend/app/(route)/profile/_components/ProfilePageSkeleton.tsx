@@ -1,4 +1,5 @@
 import Skeleton from "@/app/_components/common/Skeleton";
+import ProblemHeatmapSkeleton from "./ProblemHeatmapSkeleton";
 
 export default function ProfilePageSkeleton() {
   return (
@@ -26,8 +27,8 @@ export default function ProfilePageSkeleton() {
         </div>
       </div>
 
-      <div className="mt-6">
-        <Skeleton className="h-[250px] w-full" />
+      <div className="mt-12">
+        <ProblemHeatmapSkeleton />
       </div>
     </div>
   );
