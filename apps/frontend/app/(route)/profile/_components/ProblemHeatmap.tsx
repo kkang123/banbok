@@ -2,7 +2,9 @@ import HeatMap, { ReactCalendarHeatmapValue } from "react-calendar-heatmap";
 import clsx from "clsx";
 
 import { useAuthStore } from "@/app/_store/authStore";
+import { useUser } from "@/app/_hooks/useUser";
 import { useProblems } from "@/app/_hooks/useProblems";
+import { useProblemByDate } from "@/app/_hooks/useProblemByDate";
 
 import { Problem } from "@/app/_type/problem";
 import { COLOR_SCALE } from "@/app/_constants/colorScale";
@@ -13,15 +15,22 @@ interface ProblemHeatmapProps {
 
 export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
   const token = useAuthStore((state) => state.token);
+
   const {
     years,
     selectedYear,
     setSelectedYear,
+    loading: userLoading,
+    error: userError,
+  } = useUser(token);
+
+  const {
     data,
-    loading,
-    error,
-    fetchByDate,
-  } = useProblems(token);
+    loading: problemsLoading,
+    error: problemsError,
+  } = useProblems(token, selectedYear);
+
+  const { fetchByDate, error: dateError } = useProblemByDate();
 
   const handleDayClick = async (value?: ReactCalendarHeatmapValue<string>) => {
     if (!value?.date || !token) return;
@@ -33,6 +42,9 @@ export default function ProblemHeatmap({ onDateSelect }: ProblemHeatmapProps) {
     ? new Date(`${selectedYear}-01-01`)
     : new Date();
   const endDate = selectedYear ? new Date(`${selectedYear}-12-31`) : new Date();
+
+  const loading = userLoading || problemsLoading;
+  const error = userError || problemsError || dateError;
 
   return (
     <div className="mt-6 overflow-x-auto p-4 pl-20 shadow-md">
