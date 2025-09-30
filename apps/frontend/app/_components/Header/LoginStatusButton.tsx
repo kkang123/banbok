@@ -1,9 +1,10 @@
 "use client";
 
 import { useAuthStore } from "../../_store/authStore";
+import { useState, useEffect } from "react";
+
 import LoginButton from "../Button/LoginButton";
 import LogoutButton from "../Button/LogoutButton";
-import { useState, useEffect } from "react";
 
 const LoginStatusButton = () => {
   const user = useAuthStore((state) => state.user);
