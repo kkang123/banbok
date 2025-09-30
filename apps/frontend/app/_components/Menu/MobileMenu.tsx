@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { useAuthStore } from "../../_store/authStore";
@@ -20,7 +22,7 @@ const MobileMenu = () => {
         <>
           <MenuButton onClick={toggleMenu} />
           {isOpen && (
-            <div className="absolute right-0 mt-2 w-32 bg-gray-700 rounded-md shadow-lg py-1 z-50">
+            <div className="absolute right-0 z-50 mt-2 w-32 rounded-md bg-gray-700 py-1 shadow-lg">
               <div className="px-4 py-2">
                 <ProfileButton />
               </div>

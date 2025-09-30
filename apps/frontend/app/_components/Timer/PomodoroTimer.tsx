@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 const PomodoroTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(0); // 타이머 초기 값
+  const [timeLeft, setTimeLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const timeLeftRef = useRef(timeLeft);
 
@@ -16,14 +16,12 @@ const PomodoroTimer = () => {
     setIsRunning(false);
   };
 
-  // 시작/일시정지 버튼
   const toggleTimerBtn = useCallback(() => {
     if (timeLeftRef.current > 0) {
       setIsRunning((prev) => !prev);
     }
   }, []);
 
-  // 리셋 버튼
   const resetTimer = useCallback(() => {
     setTimeLeft(0);
     setIsRunning(false);
@@ -46,7 +44,6 @@ const PomodoroTimer = () => {
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
 
-  // 시간 포맷팅
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -57,18 +54,18 @@ const PomodoroTimer = () => {
 
   return (
     <>
-      <div className="sm:hidden mobile-timer">
-        <div className="fixed top-1/4 left-2 p-2 rounded-lg shadow-md bg-white w-32">
-          <div className="text-center text-xl font-bold mb-2">
+      <div className="mobile-timer sm:hidden">
+        <div className="fixed top-1/4 left-2 w-32 rounded-lg bg-white p-2 shadow-md">
+          <div className="mb-2 text-center text-xl font-bold">
             {formatTime(timeLeft)}
           </div>
 
-          <div className="grid grid-cols-2 gap-1 mb-1 ">
+          <div className="mb-1 grid grid-cols-2 gap-1">
             {[20, 35, 50, 60].map((min) => (
               <button
                 key={min}
                 onClick={() => addTime(min)}
-                className="bg-blue-100 text-xs hover:bg-blue-200 text-blue-800 font-medium py-0.5 rounded"
+                className="rounded bg-blue-100 py-0.5 text-xs font-medium text-blue-800 hover:bg-blue-200"
               >
                 {min}분
               </button>
@@ -79,7 +76,7 @@ const PomodoroTimer = () => {
             <button
               onClick={toggleTimerBtn}
               disabled={timeLeft === 0}
-              className={`px-1 py-0.5 rounded text-xs text-white whitespace-nowrap ${
+              className={`rounded px-1 py-0.5 text-xs whitespace-nowrap text-white ${
                 isRunning
                   ? "bg-yellow-500 hover:bg-yellow-600"
                   : "bg-blue-500 hover:bg-blue-600"
@@ -89,7 +86,7 @@ const PomodoroTimer = () => {
             </button>
             <button
               onClick={resetTimer}
-              className="px-1 py-0.5 bg-gray-500 hover:bg-gray-600 text-xs text-white rounded"
+              className="rounded bg-gray-500 px-1 py-0.5 text-xs text-white hover:bg-gray-600"
             >
               리셋
             </button>
@@ -97,18 +94,18 @@ const PomodoroTimer = () => {
         </div>
       </div>
 
-      <div className="hidden sm:block desktop-timer">
-        <div className="fixed top-[28.57%] left-2 p-4 rounded-lg shadow-md bg-white w-40 -translate-y-1/2">
-          <div className="text-center text-3xl font-bold mb-4">
+      <div className="desktop-timer hidden sm:block">
+        <div className="fixed top-[28.57%] left-2 w-40 -translate-y-1/2 rounded-lg bg-white p-4 shadow-md">
+          <div className="mb-4 text-center text-3xl font-bold">
             {formatTime(timeLeft)}
           </div>
 
-          <div className="grid grid-cols-1 gap-2 mb-4">
+          <div className="mb-4 grid grid-cols-1 gap-2">
             {[20, 35, 50, 60].map((min) => (
               <button
                 key={min}
                 onClick={() => addTime(min)}
-                className="bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium py-1 rounded"
+                className="rounded bg-blue-100 py-1 font-medium text-blue-800 hover:bg-blue-200"
               >
                 {min}분
               </button>
@@ -119,7 +116,7 @@ const PomodoroTimer = () => {
             <button
               onClick={toggleTimerBtn}
               disabled={timeLeft === 0}
-              className={`px-2 py-1 rounded text-white whitespace-nowrap ${
+              className={`rounded px-2 py-1 whitespace-nowrap text-white ${
                 isRunning
                   ? "bg-yellow-500 hover:bg-yellow-600"
                   : "bg-blue-500 hover:bg-blue-600"
@@ -129,7 +126,7 @@ const PomodoroTimer = () => {
             </button>
             <button
               onClick={resetTimer}
-              className="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded"
+              className="rounded bg-gray-500 px-3 py-1 text-white hover:bg-gray-600"
             >
               리셋
             </button>

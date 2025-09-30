@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { Problem } from "@/app/_type/problem";

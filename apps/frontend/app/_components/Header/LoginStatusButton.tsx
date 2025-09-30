@@ -1,7 +1,8 @@
 "use client";
 
-import { useAuthStore } from "../../_store/authStore";
 import { useState, useEffect } from "react";
+
+import { useAuthStore } from "../../_store/authStore";
 
 import LoginButton from "../Button/LoginButton";
 import LogoutButton from "../Button/LogoutButton";
@@ -14,7 +15,7 @@ const LoginStatusButton = () => {
     setIsHydrated(true);
   }, []);
 
-  if (!isHydrated) return null; // 아직 hydration 안 됐으면 아무것도 안 보여줌
+  if (!isHydrated) return null;
 
   const isAuthenticated = !!user;
 

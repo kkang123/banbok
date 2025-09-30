@@ -4,7 +4,6 @@ import ProblemHeatmapSkeleton from "./ProblemHeatmapSkeleton";
 export default function ProfilePageSkeleton() {
   return (
     <div className="space-y-6 p-4">
-      {/* Header 자리 */}
       <Skeleton className="absolute top-0 left-0 z-50 flex h-15 w-full justify-between p-4" />
 
       <div className="mx-auto mt-20 max-w-md rounded-lg bg-white p-6 shadow-md">

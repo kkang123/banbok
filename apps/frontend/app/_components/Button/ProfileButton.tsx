@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { useAuthStore } from "../../_store/authStore";
-import { useEffect, useState } from "react";
 
 const ProfileButton = () => {
   const user = useAuthStore((state) => state.user);
