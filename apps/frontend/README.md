@@ -1,32 +1,59 @@
 # Banbok
 
-![Banbok img](https://github.com/user-attachments/assets/8ea93104-f71b-457a-bc48-00fa5addab3b)
+![Banbok img](https://github.com/user-attachments/assets/a2102c33-2fa3-4aa9-98a7-73a21905f6d9)
 
-해결한 코딩 테스트 링크를 등록하여 알림을 일정주기대로 받아 반복 학습을 할 수 있도록 도와주는 웹 사이트입니다.
+해결한 코딩 테스트 링크를 등록하여 메일을 일정주기대로 받아 반복 학습을 할 수 있도록 도와주는 웹 사이트입니다.
 
-배포 주소 : https://banbok.vercel.app/  
+배포 주소 : https://banbok-coding.vercel.app/  
 피그마 주소 : https://www.figma.com/design/gXeeN0mnDPOViAcoA4mQU3/banbok?node-id=6-3&t=r7KwQ9gSiT5HCE0p-0
 
 ### 🔐 테스트 계정
 
-서버 배포가 안되어 현재 로그인은 진행 불가능한 상태입니다. FE 코드와 [BE 코드](https://github.com/Banbok/BE)를 내려 받아 도커 컨테이너를 실행한 뒤 네이버 OAuth 로그인을 진행해야합니다.
+네이버 OAuth를 이용하여 로그인하면 사용 가능합니다.
 
-#### 도커 실행 방법
+### 설치
 
+1. 저장소 클론
+
+```bash
+git clone https://github.com/your-username/banbok.git
+cd banbok
 ```
-도커 생성
-docker-compose up --build -d
 
-도커 닫기
+2. 의존성 설치
 
-docker-compose down -v
+```bash
+# root 폴더
+npm install
+```
 
+3. 환경 변수 설정
 
-데이터 확인 방법 mysql 컨테이너로 들어간 뒤 Exec에서
+```bash
+# apps/frontend
+# 프론트 환경변수 (.env)
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
 
-mysql -u banbok -p 입력 후
+4. 빌드
 
-패스워드(banbok)를 입력하시면 됩니다.
+```bash
+npm run build --workspace=apps/frontend, npm start --workspace=apps/frontend
+```
+
+5. 서버 설정 추가
+
+```bash
+# apps/backend
+docker-compose up -d   # 도커 활성화
+npm run db:push        # DB 설정 추가
+```
+
+6. 실행
+
+```bash
+# 루트 폴더
+npm run dev --workspace=apps/frontend
 ```
 
 ## 🔨 사용 기술
@@ -38,64 +65,74 @@ mysql -u banbok -p 입력 후
 <img src="https://img.shields.io/badge/Zustand-764ABC?style=flat&logo=Zustand&logoColor=FFFFFF"/>
 <img src="https://img.shields.io/badge/API-0000FF?style=flat&logo=Backendless&logoColor=FFFFFF"/>
 <img src="https://img.shields.io/badge/Vercel-000000?style=flat&logo=Vercel&logoColor=FFFFFF"/>
+<img src="https://img.shields.io/badge/Cheerio-FFD700?style=flat&logo=Cheerio&logoColor=000000"/>
 
 ## ✨ 구현 기능 및 시연
 
 ### 홈화면
 
-![홈화면](https://github.com/user-attachments/assets/a7c884f3-7096-446a-8e20-7718478604ae)
+![홈화면](https://github.com/user-attachments/assets/74f887d2-ace3-445f-8baf-c47f044f8ee0)
 
-### 로그인
+### 로그인 및 로그아웃
 
-![로그인](https://github.com/user-attachments/assets/0a2af36f-4d57-41af-860c-c041f7638c9b)
+![로그인 로그아웃](https://github.com/user-attachments/assets/4b236f62-ce6c-44e8-b20f-da88c5fdbd1b)
 
-### 로그아웃
+- **OAuth2 로그인** : 쿼리 파라미터로 전달된 `accessToken`을 로컬 스토리지에 안전하게 저장하고, URL에서 토큰을 제거하여 보안을 강화했습니다.
+- **상태 관리** : Zustand를 활용하여 로그인/로그아웃 상태를 전역적으로 관리하고, 새로고침 후에도 세션이 유지되도록 구현했습니다.
+- **로그아웃** : 로컬 스토리지와 전역 상태에서 토큰을 제거해 즉시 로그아웃되며, 내정보 페이지에서는 로그인 페이지로 자동 리다이렉션됩니다.
 
-![로그아웃](https://github.com/user-attachments/assets/e38d05a1-5277-4379-811c-666699774240)
+### 문제 등록
+
+![문제 등록](https://github.com/user-attachments/assets/38aa188e-5163-4ff8-903d-ce4c5d24c058)
+
+- 문제 링크 입력 시 Cheerio를 통해 문제 링크 크롤링한 후 서버로 추출한 제목, 사이트 정보를 전송하여 저장합니다.
 
 ### Web Speech API 기반 음성 제어 기능
 
 ![Web Speech API 기반 음성 제어 기능](https://github.com/user-attachments/assets/70cf5ca0-204e-4d40-a232-e0c3571e00c9)
 
+- Web Speech API 기능을 통해 간단한 로그인, 홈 화면 페이지 이동과 로그아웃 기능을 구현했습니다.
+
 ### 뽀모도로 타이머
 
 ![뽀모도로 타이머](https://github.com/user-attachments/assets/8a8316f2-2770-45f7-ac00-7ce6f083f11a)
 
+### 내 정보 페이지 및 등록 문제 조회
+
+![내 정보 페이지 및 등록 문제 조회](https://github.com/user-attachments/assets/aae83e9c-5033-446d-b3fc-80b4ea1b7b5b)
+
+- 문제 풀이 기록은 잔디 스타일 히트맵으로 제공하여, 날짜별 학습 패턴을 시각적으로 확인할 수 있도록 하였고, 연도별 전환 버튼을 통해 장기간 학습 데이터 탐색을 제공하였습니다.
+- Zustand 기반 인증 관리로, 로그인/로그아웃 상태가 전역적으로 자동 반영했습니다, 또한 로그아웃 시 로그인 페이지로 리다이렉션되어 보안성을 향상시켰습니다.
+
 ## 📦 폴더 구조
 
 ```
-app/
-├── components/ # 재사용 가능한 컴포넌트
-│ ├── Button/ # 버튼 관련 컴포넌트
-│ ├── Header/ # 헤더 관련 컴포넌트
-│ ├── Timer/ # 뽀모도로 타이머 컴포넌트
-│ └── sections/ # 페이지 섹션 컴포넌트
-│
-├── hooks/ # 커스텀 훅
-│ └── useScrollPosition.ts
-│
-├── store/ # Zustand 상태 관리
-│ ├── authStore.ts # 인증 관련 상태
-│ └── voiceCommands.ts # 음성 명령 관련 상태
-│
-├── type/ # TypeScript 타입 정의
-│ ├── crawler.type.ts
-│ ├── sectionprops.type.ts
-│ └── userInfo.type.ts
-│
-├── api/ # API 라우트
-│ └── scrape/ # 크롤링 관련 API
-│
-├── utils/ # 유틸리티 함수
-│ └── crawlers/ # 크롤러 관련 유틸리티
-│
-├── (route)/ # 페이지 라우트
-│ ├── login/ # 로그인 페이지
-│ └── profile/ # 프로필 페이지
-│
-├── globals.css # 전역 스타일
-├── layout.tsx # 루트 레이아웃
-└── page.tsx # 메인 페이지
+frontend/
+├── 📦 app/
+│   ├── 📂 _components/       # 재사용 가능한 컴포넌트
+│   │ ├── 📂 Button/          # 버튼 관련 컴포넌트
+│   │ ├── 📂 common/          # 공통 UI 관련 컴포넌트
+│   │ ├── 📂 Header/          # 헤더 관련 컴포넌트
+│   │ ├── 📂 Menu/            # 메뉴 관련 컴포넌트
+│   │ ├── 📂 Timer/           # 뽀모도로 타이머 컴포넌트
+│   │ ├── 📂 Voice/           # 음성 인식 기능 컴포넌트
+│   │ └── 📂 sections/        # 페이지 섹션 컴포넌트
+│   ├── 📂 _constants/        # 공통 상수
+│   ├── 📂 _hooks/            # 커스텀 React 훅
+│   ├── 📂 _store/            # Zustand 상태 관리
+│   ├── 📂 _type/             # TypeScript 타입 정의
+│   ├── 📂 api/               # API 라우트
+│   │ └── 📂 scrape/          # 크롤링 관련 API
+│   ├── 📂 services           # 도메인별 서비스 로직
+│   ├── 📂 utils/             # 유틸리티 함수
+│   │ └── 📂 crawlers/        # 크롤러 관련 유틸리티
+│   ├── 📂 (route)/           # 페이지 라우트
+│   │ ├── 📂 login/           # 로그인 페이지
+│   │ └── 📂 profile/         # 프로필 페이지
+│   │   └── 📂 _components/   # 프로필 섹션 컴포넌트
+│   ├── 📄 globals.css        # 전역 스타일
+│   ├── 📄 layout.tsx         # 루트 레이아웃
+│   └── 📄 page.tsx           # 메인 페이지
 ```
 
 ## 🔥 트러블 슈팅
