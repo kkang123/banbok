@@ -27,6 +27,7 @@ export function useUser(token: string | null) {
         setSelectedYear(currentYear);
       } catch (err) {
         setError("사용자 데이터를 불러오는 중 오류 발생");
+        console.error("사용자 데이터를 불러오는 중 오류 발생:", err);
       } finally {
         setLoading(false);
       }

@@ -28,6 +28,7 @@ export function useProblems(token: string | null, selectedYear: number | null) {
         setData(mapped);
       } catch (err) {
         setError("문제 데이터를 불러오는 중 오류 발생");
+        console.error("문제 데이터 불러오는 과정에서 오류 발생", err);
       } finally {
         setLoading(false);
       }

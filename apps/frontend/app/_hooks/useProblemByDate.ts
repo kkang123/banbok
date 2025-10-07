@@ -17,7 +17,7 @@ export function useProblemByDate() {
       return await fetchProblemsByDate(token, date);
     } catch (err) {
       setError("날짜별 문제 불러오기 실패");
-      console.error(err);
+      console.error("날짜별 문제 불러오는 중 오류 발생", err);
       return [];
     }
   };
