@@ -8,7 +8,6 @@ import { scrapeProblem, submitProblem } from "@/app/services/problemClient";
 import {
   successToastOptions,
   errorToastOptions,
-  serverErrorToastOptions,
 } from "@/app/_constants/CodeUrlInput.toastOptions";
 
 export function useSubmitProblem(token: string | null) {
@@ -32,7 +31,7 @@ export function useSubmitProblem(token: string | null) {
         error instanceof Error
           ? error.message
           : "서버 요청 중 오류가 발생했습니다.";
-      toast.error(message, errorToastOptions || serverErrorToastOptions);
+      toast.error(message, errorToastOptions);
       return false;
     } finally {
       setIsLoading(false);

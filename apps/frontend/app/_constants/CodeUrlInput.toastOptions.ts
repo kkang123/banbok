@@ -29,12 +29,3 @@ export const errorToastOptions = {
     background: "#808080",
   },
 };
-
-export const serverErrorToastOptions = {
-  ...commonToastOptions,
-  style: {
-    ...commonToastOptions.style,
-    background: "#fff",
-    color: "#000",
-  },
-};
