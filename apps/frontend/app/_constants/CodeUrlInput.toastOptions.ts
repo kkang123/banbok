@@ -23,6 +23,17 @@ export const successToastOptions = {
 
 export const errorToastOptions = {
   ...commonToastOptions,
+
+  icon: "❌",
+  style: {
+    ...commonToastOptions.style,
+    background: "#fff",
+    color: "#000",
+  },
+};
+
+export const serverErrorToastOptions = {
+  ...commonToastOptions,
   icon: "⚠️",
   style: {
     ...commonToastOptions.style,

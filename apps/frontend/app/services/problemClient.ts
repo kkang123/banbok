@@ -7,12 +7,23 @@ export async function scrapeProblem(link: string) {
     body: JSON.stringify({ link }),
   });
 
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "크롤링 실패");
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error("서버 응답이 올바르지 않습니다.");
   }
 
-  return res.json();
+  if (!res.ok) {
+    if (res.status >= 500) {
+      throw new Error(
+        "크롤링 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+      );
+    }
+    throw new Error(data.message || "크롤링 실패");
+  }
+
+  return data;
 }
 
 export async function submitProblem(
@@ -29,11 +40,26 @@ export async function submitProblem(
     mode: "cors",
   });
 
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.message || res.statusText);
+  let data;
+  try {
+    const text = await res.text();
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    throw new Error("서버 응답이 올바르지 않습니다.");
   }
 
-  const text = await res.text();
-  return text ? JSON.parse(text) : null;
+  if (!res.ok) {
+    switch (res.status) {
+      case 400:
+      case 409:
+        throw new Error(data.message || "잘못된 요청입니다.");
+      case 404:
+        throw new Error("데이터를 찾을 수 없습니다.");
+      case 500:
+        throw new Error("서버 내부 오류가 발생했습니다.");
+      default:
+        throw new Error(data.message || "문제 등록 실패");
+    }
+  }
+  return data;
 }
