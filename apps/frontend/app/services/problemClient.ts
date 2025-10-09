@@ -42,8 +42,7 @@ export async function submitProblem(
 
   let data;
   try {
-    const text = await res.text();
-    data = text ? JSON.parse(text) : {};
+    data = await res.json();
   } catch {
     throw new Error("서버 응답이 올바르지 않습니다.");
   }
