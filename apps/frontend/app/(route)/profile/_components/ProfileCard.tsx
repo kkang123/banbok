@@ -1,17 +1,14 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-
-import { AuthState } from "@/app/_type/userInfo.type";
 
 import { useAuthStore } from "@/app/_store/authStore";
+
+import { AuthState } from "@/app/_type/userInfo.type";
 
 interface ProfileCardProps {
   user: NonNullable<AuthState["user"]>;
 }
 
 export default function ProfileCard({ user }: ProfileCardProps) {
-  const router = useRouter();
-
   const logout = useAuthStore((state) => state.logout);
 
   const userId = user.email?.split("@")[0] || "user";

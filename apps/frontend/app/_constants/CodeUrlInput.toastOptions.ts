@@ -23,18 +23,20 @@ export const successToastOptions = {
 
 export const errorToastOptions = {
   ...commonToastOptions,
-  icon: "⚠️",
+
+  icon: "❌",
   style: {
     ...commonToastOptions.style,
-    background: "#808080",
+    background: "#fff",
+    color: "#000",
   },
 };
 
 export const serverErrorToastOptions = {
   ...commonToastOptions,
+  icon: "⚠️",
   style: {
     ...commonToastOptions.style,
-    background: "#fff",
-    color: "#000",
+    background: "#808080",
   },
 };

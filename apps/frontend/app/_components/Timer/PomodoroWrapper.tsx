@@ -6,7 +6,6 @@ import PomodoroTimer from "./PomodoroTimer";
 const PomodoroWrapper = () => {
   const pathname = usePathname();
 
-  // 숨기고 싶은 경로들
   const hiddenPaths = ["/login", "/profile"];
 
   if (hiddenPaths.includes(pathname)) {

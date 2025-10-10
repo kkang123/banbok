@@ -42,10 +42,13 @@ banbok/
 │   ├── frontend/          # Next.js 프론트엔드
 │   │   ├── app/
 │   │   │   ├── _components/    # 재사용 가능한 컴포넌트
+│   │   │   ├── _constants/     # 공통 상수
 │   │   │   ├── _hooks/         # 커스텀 React 훅
 │   │   │   ├── _store/         # Zustand 상태 관리
 │   │   │   ├── _type/          # TypeScript 타입 정의
+│   │   │   ├── services        # 도메인별 서비스 로직
 │   │   │   └── utils/          # 유틸리티 함수 및 크롤러
+│   │   └── (route)/            # 페이지 라우트
 │   │   └── public/             # 정적 자원
 │   └── backend/           # NestJS 백엔드
 │       ├── src/
@@ -118,6 +121,11 @@ npm install
 ```
 
 3. 환경 변수 설정
+
+```bash
+# 프론트 환경변수 (.env)
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
 
 ```bash
 # 백엔드 환경변수 (.env.local)

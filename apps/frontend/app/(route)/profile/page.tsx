@@ -7,8 +7,10 @@ import Header from "@/app/_components/Header/Header";
 import ProfileCard from "./_components/ProfileCard";
 import ProblemHeatmap from "./_components/ProblemHeatmap";
 import ProblemList from "./_components/ProblemList";
+import ProfilePageSkeleton from "./_components/ProfilePageSkeleton";
 
 import { useAuthStore } from "@/app/_store/authStore";
+
 import { Problem } from "@/app/_type/problem";
 
 export default function ProfilePage() {
@@ -24,7 +26,7 @@ export default function ProfilePage() {
   }, [hasHydrated, isLoading, user, router]);
 
   if (!hasHydrated || isLoading) {
-    return <div className="p-4 text-center">로딩 중...</div>;
+    return <ProfilePageSkeleton />;
   }
 
   if (!user) return null;
