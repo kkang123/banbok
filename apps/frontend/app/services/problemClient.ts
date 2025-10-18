@@ -40,9 +40,10 @@ export async function submitProblem(
     mode: "cors",
   });
 
-  let data;
+  let data = null;
   try {
-    data = await res.json();
+    const text = await res.text();
+    data = text ? JSON.parse(text) : {};
   } catch {
     throw new Error("서버 응답이 올바르지 않습니다.");
   }
